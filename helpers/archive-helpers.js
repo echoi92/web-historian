@@ -45,7 +45,7 @@ exports.isUrlInList = function(url){
 };
 
 exports.addUrlToList = function(url){
-  fs.appendFile(exports.paths.list, url+'\n', function (err) {
+  fs.appendFile(exports.paths.list, '\n' + url, function (err) {
     if (err) throw err;
     console.log('url', url, ' appended!');
   });
@@ -77,6 +77,6 @@ exports.downloadUrls = function(url){
       console.error(err);
       return;
     }
-    console.log(res.code, res.headers, res.file);
+    // console.log(res.code, res.headers, res.file);
   });
 };
