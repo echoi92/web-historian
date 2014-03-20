@@ -23,60 +23,42 @@ exports.initialize = function(pathsObj){
   });
 };
 
-// The following function names are provided to you to suggest how you might
-// modularize your code. Keep it clean!
-
 exports.readListOfUrls = function(){
   fs.readFile(exports.paths.list, function(err, data){
-    console.log('inner function running, data is', data);
     if (err) {
       throw err;
     }
     storage = data.toString().split("\n");
-    // exports.isURLArchived('www.google.com');
-    // exports.isURLArchived('www.cnn.com');
   });
 };
 
+
+
 exports.isUrlInList = function(url){
-// // assume input url is string
-// // return a boolean on whether string is in array
   return storage.indexOf(url) !== -1;
 };
 
 exports.addUrlToList = function(url){
   fs.appendFile(exports.paths.list, '\n' + url, function (err) {
     if (err) throw err;
-    console.log('url', url, ' appended!');
   });
 };
 
-exports.isURLArchived = function(url){
-  //return a boolean on whether or not there is a corresponding file inside the archive to the argument url;
+exports.isURLArchived = function(url, cb){
   fs.readdir(exports.paths.archivedSites, function(err, files){
-    if (err) throw err;
-    // console.log(files.indexOf(url) !== -1);
-    return files.indexOf(url) !== -1;
+    if (err) {
+      throw err;
+    }
+    cb(files);
   });
-
 };
 
 exports.downloadUrls = function(url){
-  // url will be a string
-  //save all the html data of the passed in url , save it into a file inside archives/sites with
-  // name equal to url;
-  //invoked if isURLArchived is false
-  // var writeStream = fs.createWriteStream(exports.paths.archivedSites + "/" + url);
   httpRequest.get({
     url: url
-    // progress: function (current, total) {
-    //   console.log('downloaded %d bytes from %d', current, total);
-    // }
   }, exports.paths.archivedSites + "/" + url, function (err, res) {
     if (err) {
-      console.error(err);
-      return;
+      throw err;
     }
-    // console.log(res.code, res.headers, res.file);
   });
 };

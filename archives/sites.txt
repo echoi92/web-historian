@@ -2,3 +2,6 @@ www.google.com
 www.cnn.com
 www.reddit.com
 www.naver.com
+www.github.com
+www.4chan.com
+www.daum.net
