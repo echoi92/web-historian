@@ -15,14 +15,10 @@ fs.readdir(archiveHelpers.paths.archivedSites, function (err, arrayOfFiles) {
   }
   // Willson: confirm with Eugene
   archiveHelpers.readListOfUrls(function (arrayOfStorage) {
-    console.log('arrayOfFiles is:\n', arrayOfFiles);
-    console.log('arrayOfStorage is:\n', arrayOfStorage);
 
     var difference = _.difference(arrayOfStorage, arrayOfFiles);
-    console.log('difference:', difference);
 
     _.each(difference, function(url){
-      console.log('invoking downloadUrls');
       archiveHelpers.downloadUrls(url);
     });
   });
