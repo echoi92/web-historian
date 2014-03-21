@@ -35,6 +35,7 @@ exports.postRequest = function(req, res){
     url = url.slice(4);
     if ( archive.isUrlInList(url) ){
       archive.isURLArchived(url, function(files){
+        console.log("type of files:", Array.isArray(files), " files is: ", files);
         if (files.indexOf(url) !== -1) {
           res.writeHead(200, headers);
           var readStream = fs.createReadStream(archive.paths.archivedSites + '/' + url);
@@ -64,7 +65,3 @@ exports.getRequest = function(req, res){
     res.end('404 error');
   }
 };
-
-
-
-// As you progress, keep thinking about what helper functions you can put here!
