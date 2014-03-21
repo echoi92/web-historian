@@ -8,7 +8,7 @@ var httpRequest = require('http-request');
  * if you move any files, you'll only need to change your code in one place! Feel free to
  * customize it in any way you wish.
  */
-var storage;
+exports.storage;
 
 exports.paths = {
   'siteAssets' : path.join(__dirname, '../web/public'),
@@ -23,19 +23,22 @@ exports.initialize = function(pathsObj){
   });
 };
 
-exports.readListOfUrls = function(){
+// Willson: confirm with Eugene
+exports.readListOfUrls = function(cb){
   fs.readFile(exports.paths.list, function(err, data){
     if (err) {
       throw err;
     }
-    storage = data.toString().split("\n");
+    exports.storage = data.toString().split("\n");
+    // Willson: confirm with Eugene
+    if (cb !== void 0) {
+      cb(exports.storage);
+    }
   });
 };
 
-
-
 exports.isUrlInList = function(url){
-  return storage.indexOf(url) !== -1;
+  return exports.storage.indexOf(url) !== -1;
 };
 
 exports.addUrlToList = function(url){
